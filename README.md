@@ -135,7 +135,7 @@ nps-preditivo-ecommerce/
 1. Clone o repositório:
 
 ```bash
-git clone [URL_DO_SEU_REPOSITORIO]
+git clone https://github.com/JoaoPaulo-66/nps-preditivo-ecommerce.git
 cd nps-preditivo-ecommerce
 ```
 

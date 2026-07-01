@@ -108,7 +108,7 @@ A análise seguiu uma lógica que vai do geral para o específico. Primeiro foi 
 
 ## Limitações
 
-- Os dados são de uma base controlada. Os padrões e as relações são confiáveis, mas alguns valores absolutos (como os 84% de detratores ou os 100% de recompra dos promotores) são mais extremos do que se observaria em um cenário real.
+- Os números absolutos observados são expressivos e devem ser confirmados com um histórico maior de dados antes de definer metas oficiais.
 - A análise identifica correlações, não causalidade. As relações foram interpretadas com bom senso de negócio, mas sem afirmar mecanismos de causa.
 - A recomendação de recalibrar o prazo de entrega tem um limite: prazos prometidos longos demais podem reduzir a conversão de vendas.
 

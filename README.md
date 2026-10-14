@@ -1,8 +1,8 @@
 # Análise Preditiva de NPS para E-commerce
 
-Análise de dados operacionais de um e-commerce com dois objetivos: entender quais fatores influenciam a satisfação do cliente (medida pelo NPS) e construir um modelo que antecipe quais clientes se tornarão detratores, permitindo ação proativa antes da aplicação da pesquisa.
+Análise de dados operacionais de um e-commerce para entender o que derruba a satisfação do cliente e antecipar quais clientes se tornarão detratores. O modelo identifica 9 em cada 10 detratores no limiar de decisão adotado, antes da aplicação da pesquisa de NPS e usando apenas dados de pedido, logística e atendimento, o que permite ao time de atendimento agir de forma proativa.
 
-Projeto desenvolvido a partir da entrega da Fase 1 do Tech Challenge da Pós-Tech em IA (FIAP), e estendido com uma etapa de modelagem preditiva.
+A análise exploratória nasceu de um desafio técnico da pós-graduação em IA (FIAP). As etapas de modelagem preditiva e de dashboard foram desenvolvidas por iniciativa própria, além do escopo original.
 
 ## Sumário
 
@@ -209,7 +209,7 @@ Vale notar a leitura da faixa "Baixo": numa base com 84% de detratores, risco ba
 
 ## Limitações
 
-- A base é **sintética**, fornecida como desafio acadêmico. As relações tendem a ser mais limpas do que em dados reais, e os resultados não devem ser lidos como expectativa de produção.
+- A base é **sintética**, fornecida como parte do desafio técnico que originou a análise. As relações tendem a ser mais limpas do que em dados reais, e os resultados não devem ser lidos como expectativa de produção.
 - Os números absolutos observados são expressivos e devem ser confirmados com um histórico maior de dados antes de definir metas oficiais.
 - A análise identifica correlações, não causalidade. As relações foram interpretadas com bom senso de negócio, mas sem afirmar mecanismos de causa, e o mesmo vale para os coeficientes do modelo.
 - A premissa de que reclamações, contatos e tempo de resolução ocorrem antes da coleta do NPS **não pôde ser verificada**, porque a base não possui datas.

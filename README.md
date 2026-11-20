@@ -12,13 +12,14 @@ A análise exploratória nasceu de um desafio técnico da pós-graduação em IA
 4. [Metodologia](#metodologia)
 5. [Principais descobertas](#principais-descobertas)
 6. [Modelo preditivo](#modelo-preditivo)
-7. [Recomendações](#recomendações)
-8. [Limitações](#limitações)
-9. [Estrutura do repositório](#estrutura-do-repositório)
-10. [Como reproduzir](#como-reproduzir)
-11. [Tecnologias utilizadas](#tecnologias-utilizadas)
-12. [Próximos passos](#próximos-passos)
-13. [Autor](#autor)
+7. [Dashboard em Power BI](#dashboard-em-power-bi)
+8. [Recomendações](#recomendações)
+9. [Limitações](#limitações)
+10. [Estrutura do repositório](#estrutura-do-repositório)
+11. [Como reproduzir](#como-reproduzir)
+12. [Tecnologias utilizadas](#tecnologias-utilizadas)
+13. [Próximos passos](#próximos-passos)
+14. [Autor](#autor)
 
 ## Objetivo do projeto
 
@@ -195,6 +196,39 @@ Como o modelo final viu todas as linhas, essas probabilidades são otimistas e s
 
 Vale notar a leitura da faixa "Baixo": numa base com 84% de detratores, risco baixo é relativo, e não significa cliente satisfeito.
 
+## Dashboard em Power BI
+
+O arquivo `reports/dashboard/nps_dashboard.pbix` consome `data/processed/nps_com_score.csv` e organiza o resultado em duas páginas, uma para entender o problema e outra para agir sobre ele.
+
+### Página 1: visão executiva
+
+![Visão executiva](reports/dashboard/17_dashboard_visao_executiva.png)
+
+Responde à pergunta "o que está derrubando a satisfação". O NPS oficial da base é **-80**, e o bloco central coloca lado a lado o NPS médio por tempo total de entrega e por dias de atraso, com a mesma escala: o primeiro é praticamente plano, o segundo despenca de 6,9 para 0,0. É o achado central da análise, visto por outro ângulo.
+
+O gráfico de atraso mostra cada dia separadamente, em vez de faixas agrupadas. A escolha foi deliberada: com apenas nove valores possíveis, agrupar exigiria definir cortes arbitrários, e a curva dia a dia mostra a queda constante sem essa decisão no meio.
+
+### Página 2: priorização de contatos
+
+![Priorização de contatos](reports/dashboard/18_dashboard_priorizacao.png)
+
+Responde à pergunta "quem contatar primeiro, e a que custo". O controle de **limiar de risco** é um parâmetro What-If que recalcula, em tempo real, quantos clientes entram na fila, quantos detratores são capturados, qual o recall e a precisão naquele corte, e **quantos detratores ficam de fora**. Esse último cartão é o custo explícito da escolha, e por isso aparece em destaque.
+
+A fila à direita não é ordenada por risco puro. Como centenas de pedidos têm probabilidade praticamente idêntica a 1, o risco sozinho não ajuda a decidir por onde começar. O critério é o **valor esperado em risco**, a probabilidade multiplicada pelo valor do pedido:
+
+```dax
+Valor em Risco = SUMX(Pedidos, Pedidos[prob_detrator] * Pedidos[order_value])
+```
+
+Somando a base inteira, são **R$ 708.741 em valor esperado em risco, ou 65,3% do valor total dos pedidos**. É o tamanho do problema em reais, e é o número que justifica o investimento em uma ação de retenção.
+
+### Decisões técnicas do relatório
+
+- **Escalas fixas**: os eixos de NPS são travados em 0 a 10 e as escalas de cor condicional usam números fixos, não "menor e maior valor". Escala que se ajusta sozinha muda a leitura conforme o filtro aplicado, sem alterar nenhum número
+- **Cor com significado**: petróleo para o que é bom, âmbar para atenção, terracota para o que é crítico, com as três variando também em luminosidade para funcionar em impressão em preto e branco e para quem não distingue matizes
+- **Títulos que afirmam o achado** em vez de descrever o eixo, e um título dinâmico na fila, que muda junto com o limiar escolhido
+- **Ressalva visível** no rodapé da página 2: os scores exibidos vêm do modelo treinado na base completa e servem para priorizar, não para medir desempenho
+
 ## Recomendações
 
 1. **Recalibrar o prazo de entrega prometido.** Como o problema não é a velocidade e sim o atraso em relação à promessa, ajustar o prazo prometido em cerca de 2 dias colocaria a maior parte dos pedidos dentro do prazo, sem qualquer investimento adicional em logística. O ajuste deve ser calibrado com dados reais, sem exagerar, para não reduzir a conversão de vendas.
@@ -234,6 +268,10 @@ nps-preditivo-ecommerce/
 │   └── 03_modelagem.ipynb          # modelo de classificação de detratores
 ├── reports/
 │   ├── figures/                    # gráficos exportados (01 a 13 da EDA, 14 a 16 da modelagem)
+│   ├── dashboard/
+│   │   ├── nps_dashboard.pbix      # relatório do Power BI
+│   │   ├── 17_dashboard_visao_executiva.png
+│   │   └── 18_dashboard_priorizacao.png
 │   └── NPS_Preditivo_Apresentacao.pdf
 ├── README.md
 └── requirements.txt
@@ -276,6 +314,8 @@ Os notebooks 02 e 03 dependem do arquivo gerado pelo notebook 01, por isso a ord
 
 Todas as divisões aleatórias usam `random_state=42`, de forma que os números deste README são reproduzidos exatamente. Pequenas diferenças de casas decimais podem aparecer com versões diferentes do scikit-learn, sem alterar as conclusões.
 
+5. Para abrir o dashboard, use o Power BI Desktop e abra `reports/dashboard/nps_dashboard.pbix`. Ele lê `data/processed/nps_com_score.csv` por caminho relativo à pasta do repositório; se o arquivo não for encontrado, aponte a origem novamente em `Transformar dados > Configurações da fonte de dados`.
+
 ## Tecnologias utilizadas
 
 - Python 3
@@ -285,10 +325,12 @@ Todas as divisões aleatórias usam `random_state=42`, de forma que os números 
 - scikit-learn (pré-processamento, modelagem e validação)
 - joblib (persistência do modelo)
 - Jupyter Notebook
+- Power BI Desktop (Power Query, DAX, parâmetro What-If)
 
 ## Próximos passos
 
-- **Dashboard em Power BI** sobre `nps_com_score.csv`, com a lista de pedidos priorizada por risco e o acompanhamento dos fatores operacionais que mais pesam na detração.
+- **Validação out-of-time**, assim que a base passar a registrar datas dos eventos operacionais. É o teste mais próximo do uso real e hoje é o principal bloqueio para levar o modelo a produção.
+- **Monitoramento do modelo em produção**, acompanhando a performance ao longo do tempo e a estabilidade das variáveis de entrada.
 
 ## Autor
 

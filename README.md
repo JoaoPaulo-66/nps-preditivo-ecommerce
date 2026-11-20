@@ -4,6 +4,8 @@ Análise de dados operacionais de um e-commerce para entender o que derruba a sa
 
 A análise exploratória nasceu de um desafio técnico da pós-graduação em IA (FIAP). As etapas de modelagem preditiva e de dashboard foram desenvolvidas por iniciativa própria, além do escopo original.
 
+**[Abrir o dashboard interativo no Power BI](https://app.powerbi.com/view?r=eyJrIjoiMmUzNjhkY2UtYzNhZC00ODVlLTk1NTItZTAyNDFmMjI5NjI5IiwidCI6IjY1NTEwMzFhLWRlNTItNGY4MS04ODk3LWE4Zjg0MGY4MWU4MSJ9)** · versão pública, sem login
+
 ## Sumário
 
 1. [Objetivo do projeto](#objetivo-do-projeto)
@@ -197,6 +199,8 @@ Como o modelo final viu todas as linhas, essas probabilidades são otimistas e s
 Vale notar a leitura da faixa "Baixo": numa base com 84% de detratores, risco baixo é relativo, e não significa cliente satisfeito.
 
 ## Dashboard em Power BI
+
+**[Abrir o dashboard interativo](https://app.powerbi.com/view?r=eyJrIjoiMmUzNjhkY2UtYzNhZC00ODVlLTk1NTItZTAyNDFmMjI5NjI5IiwidCI6IjY1NTEwMzFhLWRlNTItNGY4MS04ODk3LWE4Zjg0MGY4MWU4MSJ9)** · publicado no Power BI Service, sem necessidade de login. Os filtros, o controle de limiar e a navegação entre páginas funcionam normalmente.
 
 O arquivo `reports/dashboard/nps_dashboard.pbix` consome `data/processed/nps_com_score.csv` e organiza o resultado em duas páginas, uma para entender o problema e outra para agir sobre ele.
 
